@@ -1,0 +1,5 @@
+langchain
+langfuse
+dotenv
+langchain_ollama
+langchain_openrouter
