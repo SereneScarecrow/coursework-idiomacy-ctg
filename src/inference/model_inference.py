@@ -31,7 +31,7 @@ class ModelConstructor:
 
 class PromptConstructor:
     @staticmethod
-    def get_prompt(prompt_name: str, version = None):
+    def get_prompt(prompt_name: str, variables: dict, version = None):
             """Получает промпт из LangFuse и возвращает LangChain шаблон"""
             
             langfuse = Langfuse()
@@ -42,7 +42,7 @@ class PromptConstructor:
                 prompt = langfuse.get_prompt(prompt_name)
 
             if hasattr(prompt, 'compile'):
-                return prompt.compile()
+                return prompt.compile(**variables)
 
 
 class ModelInference:

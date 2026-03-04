@@ -8,8 +8,9 @@ load_dotenv()
 langfuse_handler = CallbackHandler()
 
 
-model = ModelConstructor.create_client("meta-llama/llama-3.3-70b-instruct:free", "openrouter")
-prompt = PromptConstructor.get_prompt("test")
+model = ModelConstructor.create_client("llama3.2:3b", "ollama")
+prompt = PromptConstructor.get_prompt("test", {"word": 'hello'})
+print(prompt)
 inference = ModelInference(model, langfuse_handler)
 print(inference(prompt))
 
