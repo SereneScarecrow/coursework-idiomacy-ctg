@@ -1,82 +1,79 @@
-import os
-from dotenv import load_dotenv
+import pandas as pd
 
-# LangChain и LangFuse импорты
 from langfuse import Langfuse
-from langchain_ollama import ChatOllama
-from langchain_openai import ChatOpenAI
 from langfuse.langchain import CallbackHandler
 
-load_dotenv()
-
-
-class ModelConstructor:
-    """Фабрика для создания клиентов языковых моделей различных провайдеров.
-    
-    Предоставляет статические методы для инициализации моделей от разных
-    поставщиков (OpenRouter, Ollama) с единым интерфейсом.
-    """
-
-    @staticmethod
-    def create_client(model_name: str, provider: str, **kwargs):
-        """Создаёт клиента для указанного провайдера.
-        
-        Args:
-            model_name: идентификатор модели у провайдера
-            provider: название провайдера ('openrouter' или 'ollama')
-            **kwargs: дополнительные параметры для инициализации модели
-                (температура, max_tokens и т.д.)
-        
-        Returns:
-            ChatOpenAI или ChatOllama: инициализированный клиент модели
-            
-        Raises:
-            ValueError: если указан неподдерживаемый провайдер
-        """
-        if provider == "openrouter":
-            return ChatOpenAI(
-                api_key=os.getenv("OPENROUTER_API_KEY"),
-                base_url="https://openrouter.ai/api/v1",
-                model=model_name,
-                **kwargs
-            )
-        elif provider == "ollama":
-            return ChatOllama(model=model_name, **kwargs)
-        else:
-            raise ValueError(f"Unsupported provider: {provider}")
-
+from inference.model_constructor import ModelConstructor
 
 class PromptConstructor:
     """Конструктор промптов из LangFuse.
     
-    Извлекает промпты из LangFuse по имени и версии, компилирует их
-    с переданными переменными в готовые шаблоны LangChain.
+    Загружает промпт из LangFuse по имени и версии при инициализации,
+    затем позволяет многократно рендерить его с разными переменными.
     """
-
-    @staticmethod
-    def get_prompt(prompt_name: str, variables: dict, version=None):
-        """Получает промпт из LangFuse и возвращает LangChain шаблон.
+    def __init__(self, prompt_name: str, version=None):
+        """Инициализирует конструктор промпта.
         
         Args:
             prompt_name: имя промпта в LangFuse
-            variables: словарь переменных для подстановки в промпт
             version: версия промпта (если не указана, берётся последняя)
+        """
+        self.prompt_name = prompt_name
+        self.version = version
+        self._raw_prompt = None
+        self._load_prompt()
+
+    def _load_prompt(self):
+        """Загружает промпт из LangFuse."""
+        langfuse = Langfuse()
+        
+        if self.version:
+            self._raw_prompt = langfuse.get_prompt(self.prompt_name, version=self.version)
+        else:
+            self._raw_prompt = langfuse.get_prompt(self.prompt_name)
+
+    def render(self, variables):
+        """Рендерит промпт с переданными переменными.
+        
+        Args:
+            variables: словарь переменных для подстановки в промпт
         
         Returns:
-            LangChain шаблон промпта с подставленными переменными
+            Скомпилированный промпт с подставленными переменными
             
         Note:
             Промпт должен быть совместим с методом compile() LangFuse
         """
-        langfuse = Langfuse()
-
-        if version:
-            prompt = langfuse.get_prompt(prompt_name, version=version)
+        if hasattr(self._raw_prompt, 'compile'):
+            return self._raw_prompt.compile(**variables)
+        return self._raw_prompt
+    
+    def render_from_df(self, df, text_column='text', columns_mapping=None):
+        """Рендерит промпт с переменными для каждой строки датафрейма Pandas.
+        
+        Args:
+            df: Pandas DataFrame или Series. 
+                - Если DataFrame: названия колонок используются как ключи переменных
+                - Если Series: преобразуется в словари с ключом, указанным в text_column
+            text_column (str): Имя колонки/ключа при передаче Series. По умолчанию 'text'
+        columns_mapping (dict, optional): Словарь для переименования колонок DataFrame
+            перед преобразованием. Например: {'original_text': 'text', 'id': 'identifier'}
+            По умолчанию None (используются исходные названия колонок)
+    
+        Returns:
+            Список скомпилированных промптов
+        """
+        if isinstance(df, pd.Series):
+            var_dicts = [{text_column: value} for value in df]
+        elif isinstance(df, pd.DataFrame):
+            # Применяем переименование колонок, если оно задано
+            if columns_mapping:
+                df = df.rename(columns=columns_mapping)
+            var_dicts = df.to_dict('records')
         else:
-            prompt = langfuse.get_prompt(prompt_name)
-
-        if hasattr(prompt, 'compile'):
-            return prompt.compile(**variables)
+            raise TypeError(f"Expected pandas DataFrame or Series, got {type(df)}")
+        
+        return [self.render(var_dict) for var_dict in var_dicts]
 
 
 class ModelInference:
