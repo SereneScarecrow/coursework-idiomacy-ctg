@@ -1,5 +1,7 @@
-langchain
-langfuse
+pandas
 dotenv
+langfuse
+langchain
 langchain_ollama
 langchain_openrouter
+langchain_gigachat
