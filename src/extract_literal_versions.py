@@ -31,11 +31,13 @@ def extract_literal_versions(model_name, provider, prompt, df, columns_mapping,
     if resume and os.path.exists(checkpoint_path):
         saved_df = pd.read_csv(checkpoint_path)
         if not saved_df.empty:
-            processed_indices = set(saved_df['index'].values)
-            # восстанавливаем результаты для правильного порядка
             for _, row in saved_df.iterrows():
-                results.append(row['literal_version'])
-            print(f"Загружено {len(results)} сохраненных результатов")
+                literal_val = row['literal_version']
+                # проверяем на None/NaN и добавляем в processed_indices
+                if pd.notna(literal_val) and literal_val is not None:
+                    results.append(literal_val)
+                    processed_indices.add(row['index'])
+            print(f"Загружено {len(results)} валидных результатов из {len(saved_df)} сохраненных")
     
     # обработка
     for idx, text in tqdm(enumerate(texts_with_prompts), total=len(texts_with_prompts)):
