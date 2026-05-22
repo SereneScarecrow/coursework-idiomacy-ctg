@@ -1,7 +1,14 @@
-pandas
 dotenv
+ipykernel
+pandas
 langfuse
+
+# библиотеки для работы с моделями
 langchain
 langchain_ollama
 langchain_openrouter
 langchain_gigachat
+
+# библиотеки для работы с метриками
+evaluate
+bert-score
