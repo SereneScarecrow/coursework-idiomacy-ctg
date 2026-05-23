@@ -22,3 +22,5 @@ coursework-idiomacy-ctg
         ├── model_constructor.py # инициализатор клиента
         └── model_inference.py # компилятор промпта, запросы к модели
 ```
+
+Для быстрого старта склонируйте репозиторий и установите зависимости из requirements.txt
