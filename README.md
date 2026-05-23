@@ -14,11 +14,11 @@ coursework-idiomacy-ctg
 ├── prompts # архив промптов
 ├── requirements.txt # зависимости
 ├── scripts # вспомогательный код
-├── src
-│   ├── evaluation # модуль для оценки
-│   ├── extract_literal_versions.py # код для извлечения буквальнх версий текстов
-│   ├── generate_idiomatic_versions.py # код для генерации образных текстов
-│   ├── inference # модуль работы с моделью
-│   │   ├── model_constructor.py # инициализатор клиента
-│   │   └── model_inference.py # компилятор промпта, запросы к модели
+└── src
+    ├── evaluation # модуль для оценки
+    ├── extract_literal_versions.py # код для извлечения буквальнх версий текстов
+    ├── generate_idiomatic_versions.py # код для генерации образных текстов
+    └── inference # модуль работы с моделью
+        ├── model_constructor.py # инициализатор клиента
+        └── model_inference.py # компилятор промпта, запросы к модели
 ```
