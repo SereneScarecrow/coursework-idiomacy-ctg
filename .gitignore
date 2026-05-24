@@ -1,7 +1,7 @@
 # virtual environment
 venv/
 
-checkpoins/
+checkpoints/
 comet_models/
 
 # secrets
