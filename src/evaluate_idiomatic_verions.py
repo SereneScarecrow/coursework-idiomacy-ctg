@@ -10,7 +10,7 @@ original_texts = data["original_text_clean"][-5:].tolist()
 literal_texts = data["literal_version"][-5:].tolist()
 
 # Инициализация оценщика
-evaluator = QualityEvaluator(gpu=False, verbose=True)
+evaluator = QualityEvaluator(gpu=True, verbose=True)
 
 # Расчёт метрик
 df_eval = evaluator.run_evaluation_pipeline(
