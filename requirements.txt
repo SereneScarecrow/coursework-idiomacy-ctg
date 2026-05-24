@@ -1,7 +1,8 @@
 dotenv
 ipykernel
-pandas
 langfuse
+pandas
+tqdm
 
 # библиотеки для работы с моделями
 langchain
@@ -10,5 +11,9 @@ langchain_openrouter
 langchain_gigachat
 
 # библиотеки для работы с метриками
-evaluate
 bert-score
+bleurt-pytorch
+gensim
+nltk
+torch>=2.6
+unbabel-comet
