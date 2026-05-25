@@ -6,12 +6,12 @@ from langfuse.langchain import CallbackHandler
 from inference.model_constructor import ModelConstructor
 from pydantic import BaseModel, Field
 
-class Idiomatic(BaseModel):
+class FormatIdiomatic(BaseModel):
     text: str = Field(description="Сгенерированный текст на русском языке")
     idiomatic_expressions: str = Field(description="Список всех идиом в тексте")
     ratio: float = Field(description="Процент идиоматичности", ge=0, le=1)
 
-class Judge(BaseModel):
+class FormatJudge(BaseModel):
     grammar: float = Field(description="Грамматичность")
     fluency: float = Field(description="Естественность речи")
     naturalness: float = Field(description="Естественность употребления идиом")

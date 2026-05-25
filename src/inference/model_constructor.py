@@ -56,4 +56,4 @@ class ModelConstructor:
             raise ValueError(f"Unsupported provider: {provider}")
         
         if structured_output_schema is not None:
-            return client.with_structured_output(structured_output_schema)
+            return client.with_structured_output(structured_output_schema, method="json_schema")

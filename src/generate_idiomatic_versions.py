@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 from langfuse.langchain import CallbackHandler
 from inference.model_constructor import ModelConstructor
-from inference.model_inference import PromptConstructor, ModelInference
+from inference.model_inference import FormatIdiomatic, PromptConstructor, ModelInference
 
 load_dotenv()
 
@@ -19,7 +19,7 @@ def generate_idiomatic_versions(model_name, provider, prompt, df,
     langfuse_handler = CallbackHandler()
 
     inference = ModelInference(
-        ModelConstructor.create_client(model_name, provider),
+        ModelConstructor.create_client(model_name, provider, structured_output_schema=FormatIdiomatic),
         langfuse_handler=langfuse_handler
         )
     # загрузка промпта
@@ -75,10 +75,10 @@ data = pd.read_csv("data/dataset_maxi_literal.csv").sample(n=5)
 
 # извлечение буквальных художественных текстов
 idiomatic_versions = generate_idiomatic_versions(
-    model_name="gemma3:4b",
+    model_name="qwen3:8b",
     provider="ollama",
     prompt="idiomatic_high",
     df=data["literal_version"],
-    checkpoint_path="checkpoints/checkpoint_gemma3_1.csv")
+    checkpoint_path="checkpoints/checkpoint_qwen3_14b_high.csv")
 
 print(idiomatic_versions)
