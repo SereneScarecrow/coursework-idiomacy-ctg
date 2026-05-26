@@ -10,8 +10,7 @@ load_dotenv()
 
 data = pd.read_csv("data/dataset_maxi_literal.csv")
 
-original_texts = data["original_text_clean"][-5:].tolist()
-literal_texts = data["literal_version"][-5:].tolist()
+original_texts = data["original_text_clean"]
 
 judge_processor = CheckpointProcessor(
     model_name="GigaChat-2-Max",
@@ -22,33 +21,15 @@ judge_processor = CheckpointProcessor(
     temperature=0.3
 )
 
-judge_results = judge_processor.process(
-    df=pd.DataFrame({'literal_text': literal_texts}),
-    columns_mapping={'literal_text': 'text'}
-)
-
-quality_evaluator = QualityEvaluator(gpu=True, verbose=True)
-quality_results = quality_evaluator.run_evaluation_pipeline(
-    references=original_texts,
-    candidates=literal_texts
-)
-
-idiom_evaluator = IdiomEvaluator()
-idiom_results = idiom_evaluator.run_evaluation_pipeline(
-    references=original_texts,
-    candidates=literal_texts
-)
+judge_results = judge_processor.process(df=original_texts)
 
 final_results = pd.DataFrame({
     'original_text': original_texts,
-    'literal_text': literal_texts,
     'judge_grammar': judge_results['grammar'],
     'judge_fluency': judge_results['fluency'],
     'judge_naturalness': judge_results['naturalness'],
     'judge_idiomaticity': judge_results['idiomaticity'],
-    'judge_idioms': judge_results['idiomatic_expressions'],
-    'bleurt': quality_results['bleurt'],
-    'idiom_score': idiom_results['score']
+    'judge_idioms': judge_results['idiomatic_expressions']
 })
 
-final_results.to_csv("evaluation_results.csv", index=False)
+final_results.to_csv("data/validate_judje.csv", index=False)

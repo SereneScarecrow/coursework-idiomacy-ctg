@@ -238,20 +238,20 @@ class QualityEvaluator(Evaluator):
         return pd.DataFrame(results)
 
 
-# class IdiomEvaluator(Evaluator):
-#     def __init__(self):
+class IdiomEvaluator(Evaluator):
+    def __init__(self):
 
-#     def measure_perplexity():
-#         return
+    def measure_perplexity():
+        return
 
-#     def measure_surprisal():
-#         return
+    def measure_surprisal():
+        return
     
-#     def measure_cosine_similarity():
+    def measure_cosine_similarity():
 
-#     def measure_coherence():
-#         return
+    def measure_coherence():
+        return
     
-#     def measure_abstractness():
-#         return
+    def measure_abstractness():
+        return
 

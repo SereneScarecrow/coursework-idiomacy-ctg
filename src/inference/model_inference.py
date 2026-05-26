@@ -1,22 +1,7 @@
 import pandas as pd
-
 from langfuse import Langfuse
 from langfuse.langchain import CallbackHandler
-
 from inference.model_constructor import ModelConstructor
-from pydantic import BaseModel, Field
-
-class FormatIdiomatic(BaseModel):
-    text: str = Field(description="Сгенерированный текст на русском языке")
-    idiomatic_expressions: str = Field(description="Список всех идиом в тексте")
-    ratio: float = Field(description="Процент идиоматичности", ge=0, le=1)
-
-class FormatJudge(BaseModel):
-    grammar: float = Field(description="Грамматичность")
-    fluency: float = Field(description="Естественность речи")
-    naturalness: float = Field(description="Естественность употребления идиом")
-    idiomaticity: float = Field(description="Образность текста")
-    idiomatic_expressions: str = Field(description="Список всех идиом в тексте")
 
 class PromptConstructor:
     """Конструктор промптов из LangFuse.
