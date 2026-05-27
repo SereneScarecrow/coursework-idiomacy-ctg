@@ -17,3 +17,4 @@ gensim
 nltk
 torch>=2.6
 unbabel-comet
+scikit-learn
