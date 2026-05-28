@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 
 from typing import Type, Optional, List
-from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 from langchain_gigachat.chat_models import GigaChat
@@ -29,8 +28,13 @@ class FormatJudge(BaseModel):
         ge=0, le=5
     )
     naturalness: int = Field(
-        description=("Естественность и осмысленность употребления идиоматических выражений. "
-        "Оценка от 0 до 5, где 0 — идиомы вставлены неестественно, как чужеродные элементы, 5 — идиомы органично вплетены в контекст."),
+        description=("Осмысленность употребления идиоматических выражений. "
+        "Оценка от 0 до 5, где 0 — идиомы вставлены неестественно, как чужеродные элементы, не связаны с текстом по смыслу, 5 — идиомы органично вплетены в контекст."),
+        ge=0, le=5
+    )
+    idiom_diversity: int = Field(
+        description=("Вариативность по типам идиом. "
+        "Оценка от 0 до 5, где 0 — в тексте повторяется единственная конструкция (например, только сравнение, только метафора), 5 — встречаются разные конструкции и типы идиоматичности."),
         ge=0, le=5
     )
     idiomaticity: int = Field(
@@ -39,7 +43,8 @@ class FormatJudge(BaseModel):
         ge=0, le=2
     )
     idiomatic_expressions: str = Field(
-        description="Полный список всех идиоматических выражений, встреченных в тексте, в той форме, в которой они встретились."
+        default="",
+        description="Список всех идиоматических выражений, встреченных в тексте, в той форме, в которой они встретились. Перечислите их через запятую. Если идиом нет, верните пустую строку."
     )
 
 
