@@ -18,3 +18,8 @@ nltk
 torch>=2.6
 unbabel-comet
 scikit-learn
+wordfreq
+pymorphy3
+textblob
+deep-translator
+syntaxcomp
