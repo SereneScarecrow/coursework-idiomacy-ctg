@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
 from langfuse.langchain import CallbackHandler
 
-from inference.model_constructor import ModelConstructor
-from inference.model_inference import PromptConstructor, ModelInference
+from deprecated_code.inference.model_constructor import ModelConstructor
+from deprecated_code.inference.model_inference import PromptConstructor, ModelInference
 
 load_dotenv()
 

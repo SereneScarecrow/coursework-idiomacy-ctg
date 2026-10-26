@@ -4,8 +4,8 @@ from tqdm import tqdm
 from typing import Optional, Callable, Dict, Any, Union
 
 from langfuse.langchain import CallbackHandler
-from inference.model_constructor import ModelConstructor
-from inference.model_inference import PromptConstructor, ModelInference
+from deprecated_code.inference.model_constructor import ModelConstructor
+from deprecated_code.inference.model_inference import PromptConstructor, ModelInference
 
 
 class CheckpointProcessor:

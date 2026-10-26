@@ -1,7 +1,7 @@
 import pandas as pd
 from langfuse import Langfuse
 from langfuse.langchain import CallbackHandler
-from inference.model_constructor import ModelConstructor
+from deprecated_code.inference.model_constructor import ModelConstructor
 
 class PromptConstructor:
     """Конструктор промптов из LangFuse.
