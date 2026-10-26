@@ -62,11 +62,11 @@ if __name__ == "__main__":
     model, tokenizer, _ = load_sentiment_model(device=device)
     
     # Читаем данные
-    df = pd.read_csv("data/all_generated_metrics.csv")
+    df = pd.read_csv("data/dataset_maxi_metrics.csv")
     
     # Применяем функцию
-    df['sentiment'] = df['text'].apply(lambda x: measure_sentiment(x, model, tokenizer, device))
+    df['sentiment'] = df['original_text'].apply(lambda x: measure_sentiment(x, model, tokenizer, device))
     
-    print(df[['text', 'sentiment']])
+    print(df[['original_text', 'sentiment']])
 
-    df.to_csv("data/all_generated_metrics.csv")
+    df.to_csv("data/dataset_maxi_metrics.csv")

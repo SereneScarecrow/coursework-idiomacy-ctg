@@ -46,6 +46,6 @@ df = pd.read_csv("data/dataset_maxi_metrics.csv")
 df['word_freq_mean'] = df['original_text'].apply(lambda x: measure_word_frequency(x)['mean_frequency'])
 df['word_freq_coverage'] = df['original_text'].apply(lambda x: measure_word_frequency(x)['coverage'])
 
-print(df[['text', 'word_freq_mean', 'word_freq_coverage']])
+print(df[['original_text', 'word_freq_mean', 'word_freq_coverage']])
 
 df.to_csv("data/dataset_maxi_metrics.csv")
