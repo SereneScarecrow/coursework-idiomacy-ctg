@@ -2,7 +2,6 @@
 
 > **NOTE: the project code is currently undergoing revision. The main goal of the revision is to make the project easily reproducible. Unfortunately, some features may be unavailable at the moment.**
 
-
 This repository contains materials for coursework on figurative language generation.
 
 This research proposes an original method for studying idiomaticity and text style using supervised generation. It's development stems from the fact that NLP studies often focuse on singular expressions, when in a coherent text these expressions can occur together in one context. The proposed method involves assessing LLMs' ability to transform literal version of the text into an figurative one with a specified level of idiomaticity (low, medium, or high).
