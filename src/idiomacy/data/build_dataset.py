@@ -1,7 +1,7 @@
 """
 This module creates the dataset.
 
-    python build_dataset.py --input data/raw/dataset_maxi_literal.csv --output-dir data/processed
+    python build_dataset.py --input data/raw/dataset_maxi.csv --output-dir data/processed
 
 Outputs (in --output-dir):
     dataset_maxi.csv       the dataset (columns are described in DATASET.md)

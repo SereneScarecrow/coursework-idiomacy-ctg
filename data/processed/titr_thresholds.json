@@ -1,0 +1,17 @@
+{
+  "low_max": 0.11732358920622979,
+  "high_min": 0.37964734474378203,
+  "source": {
+    "low_max": "computed",
+    "high_min": "computed"
+  },
+  "computed_quantiles": {
+    "q25": 0.11732358920622979,
+    "q50": 0.22100938967136152,
+    "q75": 0.37964734474378203
+  },
+  "n_texts": 84,
+  "rule": "low: TITR <= low_max; high: TITR > high_min; medium otherwise",
+  "method": "pandas quantile (linear interpolation) over all texts of both domains",
+  "text_pipeline_version": "1"
+}
