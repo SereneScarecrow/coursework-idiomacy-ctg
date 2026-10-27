@@ -4,5 +4,8 @@ venv/
 checkpoints/
 comet_models/
 
+__pycache__/
+*.py[cod]
+
 # secrets
 .env
