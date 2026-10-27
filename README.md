@@ -39,3 +39,9 @@ idiomacy-ctg/
 ├── notebooks/         # 01_dataset, 02_judge_validation, 03_results (читают только results/tables)
 └── docs/decisions.md  # decisions for this project
 ```
+
+## AI usage
+
+The AI-powered literature search assistant provided on the arXiv platform was used during the initial stages of this project to discover relevant research materials and references. All literature sources and citations suggested by the assistant tool were rewieved manualy before inclusion.  
+
+Claude (Anthropic) was used as a coding and review assistant for parts of this repository. The research design, data collection and annotation, experiments and all final decisions, as well as the conclusions of the study, are the author’s own. AI-generated code was checked, tested and edited where nessesary by the author before inclusion.
